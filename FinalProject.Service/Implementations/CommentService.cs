@@ -51,8 +51,9 @@ public class CommentService : ICommentService
         {
             throw new ArgumentException("invalid argument");
         }
-
-        var result = await _commentRepository.GetSingleCommentAsync(x => x.Id == id);
+        var claims = _httpContextAccessor.HttpContext.User.Claims;
+        var authorId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+        var result = await _commentRepository.GetSingleCommentAsync(x => x.Id == id && authorId == x.UserId);
 
         if (result is null)
         {
