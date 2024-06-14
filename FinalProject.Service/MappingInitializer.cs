@@ -10,7 +10,7 @@ namespace FinalProject.Service
 {
     internal class MappingInitializer
     {
-        // es aris aoutomapperistvis
+        
         public static IMapper Initialize()
         {
             MapperConfiguration configuration = new(config =>
@@ -27,10 +27,10 @@ namespace FinalProject.Service
                 config.CreateMap<User, UserForGettingDTO>().ReverseMap();
                 config.CreateMap<User, UserForUpdatingDTO>().ReverseMap();
 
-                //mappers izavs am tipebis
+                
                 config.CreateMap<UserDTO, IdentityUser>().ReverseMap();
                 config.CreateMap<RegistrationRequestDTO, IdentityUser>()
-                //Email gvinda ro igive username iyos
+                
                 .ForMember(destination => destination.UserName, options => options.MapFrom(source => source.Email))
                 .ForMember(destination => destination.NormalizedUserName, options => options.MapFrom(source => source.Email.ToUpper()))
                 .ForMember(destination => destination.Email, options => options.MapFrom(source => source.Email))

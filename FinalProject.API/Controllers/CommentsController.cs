@@ -15,7 +15,7 @@ namespace FinalProject.API.Controllers
             _commentService = commentService;
         }
 
-        //TODO შევავსო კონტროლერის მხარეს გამოვიძახო სხვა ფუნქციოები სერვისებიდან
+        
 
         [HttpGet]
         public async Task<IActionResult> AllComments()

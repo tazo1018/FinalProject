@@ -16,7 +16,6 @@ namespace FinalProject.Service.Implementations
         private readonly IHttpContextAccessor _httpContextAccessor;
         public PostService(IPostRepository postRepository, IHttpContextAccessor httpContextAccessor)
         {
-            // aq ewrera _httpContextAccessor = _httpContextAccessor;
             _postRepository = postRepository;
             _mapper = MappingInitializer.Initialize();
             _httpContextAccessor = httpContextAccessor;
@@ -30,7 +29,7 @@ namespace FinalProject.Service.Implementations
                 throw new ArgumentNullException("invalid argument");
             }
 
-            var result = _mapper.Map<Post>(model); // aq wesit egrea\
+            var result = _mapper.Map<Post>(model); 
             result.AuthorId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
             result.Status = Status.Active;
             result.State = State.Pending;

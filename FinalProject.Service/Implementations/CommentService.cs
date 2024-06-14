@@ -16,7 +16,6 @@ public class CommentService : ICommentService
     private readonly IPostRepository _postRepository;
     public CommentService(ICommentRepository commentRepository, IHttpContextAccessor httpContextAccessor, IPostRepository postRepository)
     {
-        // aq ewrera _httpContextAccessor = _httpContextAccessor;
         _commentRepository = commentRepository;
         _mapper = MappingInitializer.Initialize();
         _httpContextAccessor = httpContextAccessor;
@@ -37,7 +36,7 @@ public class CommentService : ICommentService
             throw new PostNotFoundException();
         }
 
-        var result = _mapper.Map<Comment>(model); // aq wesit egrea
+        var result = _mapper.Map<Comment>(model); 
         result.UserId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
         result.UploadTime = DateTime.Now;
         await _commentRepository.AddCommentAsync(result);

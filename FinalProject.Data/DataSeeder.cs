@@ -14,7 +14,7 @@ namespace FinalProject.Data
                     Id = 1,
                     Title = "რალამაზი დღეა",
                     CreationTime = DateTime.Now,
-                    AuthorId = "8716671C-1D98-48ED-83D0-F859C8F88D31", // Ensure this matches the new user
+                    AuthorId = "8716671C-1D98-48ED-83D0-F859C8F88D31", 
                     State = State.Show,
                     Status = Status.Active,
                     Description = "გამარჯობა, მართლააც რომ ლამაზი დღეა"
@@ -93,7 +93,7 @@ namespace FinalProject.Data
                     LastName = "gio",
                     IsBlocked = false,
                 },
-                new User // Add this new user
+                new User 
                 {
                     Id = "8716671C-1D98-48ED-83D0-F859C8F88D31",
                     UserName = "AuthorUser",

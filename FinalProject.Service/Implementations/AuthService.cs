@@ -12,13 +12,12 @@ namespace FinalProject.Service.Implementations
 {
     public class AuthService : IAuthService
     {
-        //TODO gadavaketo, shemovitano repozitori
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtGenerator _jwtTokenGenerator;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor; // mexmareba imashi ro daloginebuli user avigho tu mwirdeba
+        private readonly IHttpContextAccessor _httpContextAccessor; 
         private const string _adminRole = "administrator";
         private const string _customerRole = "user";
 
@@ -98,7 +97,6 @@ namespace FinalProject.Service.Implementations
                     {
                         if(!await _roleManager.RoleExistsAsync(_customerRole))
                         {
-                            //to roli ar maqvs vamateb axal rolls da mag aaxal rolls vadzlev users
                             await _roleManager.CreateAsync(new IdentityRole(_customerRole));
                         }
                         await _userManager.AddToRoleAsync(userToReturn, _customerRole);
@@ -124,7 +122,6 @@ namespace FinalProject.Service.Implementations
 
         public async Task RegisterAdmin(RegistrationRequestDTO registrationRequestDTO)
         {
-            //es ari axali adminis sheqmna
             User user = new()
             {
                 UserName = registrationRequestDTO.Email,
@@ -142,13 +139,11 @@ namespace FinalProject.Service.Implementations
                 var result = await _userManager.CreateAsync(user, registrationRequestDTO.Password);
                 if (result.Succeeded)
                 {
-                    //unda movdzebno user
                     var userToReturn = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == registrationRequestDTO.Email.ToLower());
                     if (userToReturn != null)
                     {
                         if (!await _roleManager.RoleExistsAsync(_adminRole))
                         {
-                            //to roli ar maqvs vamateb axal rolls da mag aaxal rolls vadzlev users
                             await _roleManager.CreateAsync(new IdentityRole(_adminRole));
                         }
                         await _userManager.AddToRoleAsync(userToReturn, _adminRole);

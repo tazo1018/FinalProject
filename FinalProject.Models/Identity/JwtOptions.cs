@@ -1,10 +1,8 @@
 ﻿namespace FinalProject.Models.Identity
 {
-    public class JwtOptions // sxva gzac mojna
+    public class JwtOptions 
     {
-        // secret
-        //issuer
-        //Audience
+        
 
         public string Secret { get; set; } = string.Empty;
         public string Issuer {  get; set; } = string.Empty;

@@ -15,7 +15,7 @@ namespace FinalProject.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // aeseni reebia idk vaaabshe
+            
             modelBuilder.SeedPosts();
             modelBuilder.SeedUsers();
             modelBuilder.SeedRoles();
@@ -91,7 +91,6 @@ namespace FinalProject.Data
             modelBuilder.Entity<User>()
                 .ToTable("AspNetUsers");
 
-            //modelBuilder.Entity<User>().HasKey(p => p.Id);
 
             modelBuilder.Entity<User>()
                 .Property(c => c.FirstName)

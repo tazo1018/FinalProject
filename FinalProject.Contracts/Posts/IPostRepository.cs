@@ -6,7 +6,6 @@ namespace FinalProject.Contracts.Posts
     public interface IPostRepository : ISavable
     {
         Task<List<Post>> GetAllPostsAsync();
-        //raghac pirobis mixedvit wamogheba
         Task<List<Post>> GetAllPostsAsync(Expression<Func<Post, bool>> filter);
         Task<Post?> GetSinglePostAsync(Expression<Func<Post, bool>> filter);
         Task AddPostAsync(Post post);

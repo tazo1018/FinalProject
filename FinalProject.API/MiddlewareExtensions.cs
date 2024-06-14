@@ -16,7 +16,6 @@ namespace FinalProject.API
 {
     public static class MiddlewareExtensions
     {
-        // servisebis dasainjeqteblad
         public static void AddDatabaseContext(this WebApplicationBuilder builder) => builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerLocalConnection")));
 
         public static void ConfigureJwtOptions(this WebApplicationBuilder builder) => builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
@@ -24,7 +23,6 @@ namespace FinalProject.API
 
         public static void AddIdentity(this WebApplicationBuilder builder)
         {
-            // eseni awyoben identity s oo
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(Options =>
             {
                 Options.Password.RequiredLength = 3;
@@ -33,7 +31,7 @@ namespace FinalProject.API
                 Options.Password.RequireLowercase = false;
                 Options.Password.RequireDigit = false;
 
-                Options.User.RequireUniqueEmail = true; // gmail uew unikaluri unda hqondes 
+                Options.User.RequireUniqueEmail = true; 
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -41,17 +39,14 @@ namespace FinalProject.API
 
         public static void AddAuthentication(this WebApplicationBuilder builder)
         {
-            //appsetings json idan igheb secrets issuers da audiences
-            //JwtOptions jwtOptions = new();
 
             var secret = builder.Configuration.GetValue<string>("ApiSettings:JwtOptions:Secret");
             var issuer = builder.Configuration.GetValue<string>("ApiSettings:JwtOptions:Issuer");
             var audience = builder.Configuration.GetValue<string>("ApiSettings:JwtOptions:Audience");
-            var key = Encoding.ASCII.GetBytes(secret); //ighebs raghaca strings da bytebis masivad aqcevs
+            var key = Encoding.ASCII.GetBytes(secret); 
 
             builder.Services.AddAuthentication(options =>
             {
-                //prosta default parametrebs mivmartav
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
@@ -60,7 +55,7 @@ namespace FinalProject.API
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true, // amowmebs tokeins sicocxlis xangrdzlivobas
+                    ValidateLifetime = true, 
 
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = issuer,
@@ -70,7 +65,6 @@ namespace FinalProject.API
             });
         }
 
-        //public static void AddHttpContextAccessor(this WebApplicationBuilder builder) => builder.AddHttpContextAccessor();
 
 
         public static void AddScopedServices(this WebApplicationBuilder builder)

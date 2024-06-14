@@ -16,7 +16,6 @@ namespace FinalProject.API.Controllers
             _postService = postService;
         }
 
-        //TODO შევავსო კონტროლერის მხარეს გამოვიძახო სხვა ფუნქციოები სერვისებიდან
 
         [HttpGet]
         public async Task<IActionResult> AllPosts()
