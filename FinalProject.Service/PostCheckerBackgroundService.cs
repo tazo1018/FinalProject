@@ -4,23 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-public class PostCheckerBackgroundService : IHostedService, IDisposable
+namespace FinalProject.Service;
+
+public class PostCheckerBackgroundService : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
-    private Timer _timer;
 
     public PostCheckerBackgroundService(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
     }
 
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        _timer = new Timer(CheckPostStatus, null, TimeSpan.Zero, TimeSpan.FromHours(1));
-        return Task.CompletedTask;
-    }
-
-    private async void CheckPostStatus(object state)
+    private async Task CheckPostStatus()
     {
         using (var scope = _scopeFactory.CreateScope())
         {
@@ -53,14 +48,13 @@ public class PostCheckerBackgroundService : IHostedService, IDisposable
         return false;
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        _timer?.Change(Timeout.Infinite, 0);
-        return Task.CompletedTask;
-    }
 
-    public void Dispose()
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _timer?.Dispose();
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            await CheckPostStatus();
+            await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
+        }
     }
 }
